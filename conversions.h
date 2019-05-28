@@ -1,3 +1,12 @@
+#ifndef CONVERSIONS_H
+#define CONVERSIONS_H
+
+#include <vector>
+#include <string.h>
+#include <iostream>
+
+typedef unsigned long long longlong;
+
 int charToInt(unsigned char input)
 {
 	if (input >= '0' && input <= '9')
@@ -12,6 +21,7 @@ int charToInt(unsigned char input)
 	{
 		return input - 'a' + 10;
 	}
+	return 0;
 }
 
 void charToBinary(unsigned char* input, unsigned char* output)
@@ -31,6 +41,13 @@ void stripCheckedRipe(std::vector<unsigned char>* input, unsigned char* output)
 		sprintf((char*)output + j, "%02x", *i);
 		j += 2;
 	}
+}
+
+// A fast custom hash that produces an output compatible with std::unordered_set
+// by treating the binary data directly as a long long
+inline longlong fastHash(unsigned char* input)
+{
+	return *(longlong*)(input);
 }
 
 // This function courtesy of https://github.com/bitcoin/bitcoin
@@ -105,3 +122,4 @@ bool decodeBase58(const char *psz, std::vector<unsigned char>& vch)
 
 	return true;
 }
+#endif
