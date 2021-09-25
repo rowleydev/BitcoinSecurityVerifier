@@ -52,7 +52,7 @@ inline longlong fastHash(unsigned char* input)
 
 // This function courtesy of https://github.com/bitcoin/bitcoin
 static const char* pszBase58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
-bool decodeBase58(const char *psz, std::vector<unsigned char>& vch)
+bool decodeBase58(const char* psz, std::vector<unsigned char>& vch)
 {
 	// Skip leading spaces
 	while (*psz && isspace(*psz))
@@ -75,7 +75,7 @@ bool decodeBase58(const char *psz, std::vector<unsigned char>& vch)
 	while (*psz)
 	{
 		// Decode base58 character
-		const char *ch = strchr(pszBase58, *psz);
+		const char* ch = strchr(pszBase58, *psz);
 		if (ch == NULL)
 		{
 			return false;
@@ -107,7 +107,7 @@ bool decodeBase58(const char *psz, std::vector<unsigned char>& vch)
 	// Skip leading zeroes in base 256
 	std::vector<unsigned char>::iterator it = b256.begin();
 	while (it != b256.end() && *it == 0)
-	{	
+	{
 		it++;
 	}
 

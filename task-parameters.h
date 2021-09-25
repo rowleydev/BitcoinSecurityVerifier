@@ -4,8 +4,8 @@
 #include <openssl/bio.h>
 
 typedef unsigned long long longlong;
-struct TaskParameters 
-{ 
+struct TaskParameters
+{
 	BIGNUM* start;
 	BIGNUM* increment;
 	int id;

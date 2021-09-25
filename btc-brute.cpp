@@ -1,19 +1,19 @@
-/* 
-   This program is designed to demonstrate the algorithms and elliptical curve 
-   cryptography behind a brute force attack on bitcoin private keys. It is not 
+/*
+   This program is designed to demonstrate the algorithms and elliptical curve
+   cryptography behind a brute force attack on bitcoin private keys. It is not
    meant as a practical attack and favours speed over style.
 
    Compile as: g++ -o btc-brute btc-brute.cpp -lcrypto -lpthread -std=c++11
    Run as:     btc-brute pathToListOfTargetAddresses threadCount startingPrivateKey
    EG:	       btc-brute targets 2 10000000000000000000
 
-   Both compressed and uncompressed addresses are computed. Public keys are 
+   Both compressed and uncompressed addresses are computed. Public keys are
    further hashed for compatibility with std::unordered_set
 
    Valid private keys are 1 to:
    115792089237316195423570985008687907852837564279074904382605163141518161494336
 
-   As an example create a file called targets containing the addresses: 
+   As an example create a file called targets containing the addresses:
 
 	1EDZLWcW4biU4qRYPUTw2uwQbMiAkwDutq
 	13W2kfyAD84VJDm7bNjk7Tpfq9HasH9Pyv
@@ -41,9 +41,9 @@ pthread_mutex_t outputMutex = PTHREAD_MUTEX_INITIALIZER;
 int main(int argc, char* args[])
 {
 	if (argc != 4)
-	{ 
-		printf("Usage: pathToListOfTargetAddresses threadCount startingPrivateKey\n"); 
-		exit(0); 
+	{
+		printf("Usage: pathToListOfTargetAddresses threadCount startingPrivateKey\n");
+		exit(0);
 	}
 
 	int threadCount = atoi(args[2]);
@@ -65,11 +65,11 @@ int main(int argc, char* args[])
 	// Create thread array
 	pthread_t* threads = new pthread_t[threadCount];
 
-	for(int i = 0;i<threadCount;i++)
+	for (int i = 0; i < threadCount; i++)
 	{
 		BIGNUM* privateKey = BN_dup(startingPrivateKey);
 
-		TaskParameters* taskParameters = new TaskParameters {privateKey, increment, i, checkTargets, reportProgress};
+		TaskParameters* taskParameters = new TaskParameters{ privateKey, increment, i, checkTargets, reportProgress };
 
 		output(privateKey, i, "\nCreating thread: %i, starting value: ");
 
@@ -99,7 +99,9 @@ void reportProgress(BIGNUM* value, int id)
 void output(BIGNUM* bignum, int id, const char* format)
 {
 	// Spin wait for output
-	while(pthread_mutex_trylock(&outputMutex) == EBUSY) { }
+	while (pthread_mutex_trylock(&outputMutex) == EBUSY)
+	{
+	}
 
 	printf(format, id);
 	printBigNum(bignum);

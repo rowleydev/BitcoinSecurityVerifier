@@ -22,7 +22,7 @@ void* task(void* inputParams)
 	BIGNUM* publicKeyUCBN = BN_new();
 
 	// OpenSSL library initialisation
-	BN_CTX* bignumContext =	BN_CTX_new();
+	BN_CTX* bignumContext = BN_CTX_new();
 	EC_KEY* ecKey = EC_KEY_new_by_curve_name(OBJ_txt2nid("secp256k1"));
 	const EC_GROUP* ecGroup = EC_KEY_get0_group(ecKey);
 	EC_POINT* publicKey = EC_POINT_new(ecGroup);
@@ -80,7 +80,7 @@ void* task(void* inputParams)
 
 		// Search targets
 		checkTargets(hashValueUC, privateKey, id, "\nThread %i Found uncompressed private key: ");
-	
+
 		// Output progress
 		if (i % 10000 == 0)
 		{
